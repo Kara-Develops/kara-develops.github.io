@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kara | AI Developer & Content Specialist</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            /* Dark Mode (Default) */
+            --bg-color: #050505;
+            --text-primary: #ffffff;
+            --text-secondary: #a3a3a3;
+            --accent: #ffffff;
+            --card-bg: #111111;
+            --border-color: #333333;
+            --nav-bg: rgba(5, 5, 5, 0.8);
+            
+            --spacing-unit: 1.5rem;
+            --font-main: 'Inter', sans-serif;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Light Mode Override */
+        body.light-mode {
+            --bg-color: #ffffff;
+            --text-primary: #000000;
+            --text-secondary: #555555;
+            --accent: #000000;
+            --card-bg: #F5F5F5;
+            --border-color: #e5e5e5;
+            --nav-bg: rgba(255, 255, 255, 0.8);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        h1 { font-size: clamp(3rem, 8vw, 6rem); }
+        h2 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 2rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 1rem; }
+        
+        p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 60ch;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--accent);
+            color: var(--bg-color);
+            font-weight: 600;
+            border-radius: 4px;
+            border: 1px solid var(--accent);
+            margin-top: 1.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        .section-padding {
+            padding: 8rem 0;
+        }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.05em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Dark Mode Toggle */
+        #theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 0.5rem;
+        }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-sub {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 300;
+        }
+
+        .hero-img-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            background-color: var(--card-bg); 
+            aspect-ratio: 1 / 1.1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+
+        .hero-img-container img:hover {
+            filter: grayscale(0%);
+        }
+
+        /* --- STATS BAR --- */
+        .stats-bar {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* --- ABOUT --- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 4rem;
+        }
+
+        /* --- SERVICES --- */
+        .services-split {
+            display: grid;
+            grid-template-columns: 1fr 1px 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .divider {
+            width: 1px;
+            height: 100%;
+            background-color: var(--border-color);
+        }
+
+        .service-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .service-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+        }
+
+        .service-list li::before {
+            content: "→";
+            margin-right: 10px;
+            color: var(--accent);
+            opacity: 0.5;
+        }
+
+        /* --- PRICING --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .price-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .price-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .price-card.featured {
+            border-color: var(--accent);
+            border-width: 2px;
+        }
+
+        .badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--bg-color);
+            padding: 0.3rem 1rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border-radius: 20px;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .price-features li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .price-features li::before {
+            content: "✓";
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .pricing-note {
+            text-align: center;
+            margin-top: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* --- PROCESS --- */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            position: relative;
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            opacity: 0.2;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        /* --- RECENT PROJECTS --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .project-type {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.1em;
+        }
+
+        .project-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            font-size: 0.95rem;
+        }
+
+        /* --- FAQ --- */
+        .faq-grid {
+            display: grid;
+            gap: 2rem;
+            max-width: 800px;
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1.5rem;
+        }
+
+        .faq-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .faq-item p {
+            font-size: 1rem;
+        }
+
+        /* --- WHY ME --- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        /* --- CONTACT --- */
+        .contact-section {
+            text-align: center;
+            padding: 10rem 0;
+        }
+
+        .contact-links {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            font-size: 0.9rem;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* --- ANIMATION --- */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- MOBILE RESPONSIVE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 3.5rem; }
+            .hero-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+            .hero-img-container { order: -1; max-width: 300px; margin: 0 auto; }
+            .about-grid { grid-template-columns: 1fr; }
+            
+            .services-split { 
+                grid-template-columns: 1fr; 
+                gap: 0;
+            }
+            .divider { display: none; }
+            .services-col { margin-bottom: 3rem; }
+            
+            .nav-links { display: none; }
+            
+            .stats-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .process-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Kara.</a>
+                <ul class="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button id="theme-toggle" aria-label="Toggle Dark Mode">
+                    <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg id="sun-icon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-text fade-in">
+                    <h1>AI Developer & <br>Content Specialist</h1>
+                    <p class="hero-sub">Building intelligent solutions and creating compelling content.</p>
+                    <a href="https://www.fiverr.com/studio_kara/" target="_blank" class="btn">View Services</a>
+                </div>
+                <div class="hero-img-container fade-in" style="animation-delay: 0.2s;">
+                    <img src="kara-profile.jpg" alt="Kara - AI Developer" onerror="this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=600&h=660&sat=-100';">
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-bar">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat">
+                        <div class="stat-number">&lt;6hr</div>
+                        <div class="stat-label">Average Response</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">On-Time Delivery</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">24-48hr</div>
+                        <div class="stat-label">Typical Turnaround</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section-padding">
+            <div class="container about-grid">
+                <h2>About</h2>
+                <div class="about-content">
+                    <p>I'm a developer and writer who specializes in AI/ML implementation and high-quality content creation. Whether you need custom automation, technical solutions, or polished writing, I deliver work that actually achieves your goals. I focus on understanding what you need, not just what you ask for, and translating that into results.</p>
+                    <br>
+                    <p>My approach is simple: clean work, clear communication, and meeting deadlines. No fluff, no excuses.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section-padding" style="background-color: var(--card-bg);">
+            <div class="container">
+                <h2>Services</h2>
+                <div class="services-split">
+                    <div class="services-col">
+                        <h3>Technical</h3>
+                        <ul class="service-list">
+                            <li>Python Development & Automation</li>
+                            <li>AI/ML Integration & Implementation</li>
+                            <li>Custom Chatbots & API Integration</li>
+                            <li>Data Analysis & Visualization</li>
+                            <li>Web Scraping & Processing</li>
+                            <li>Code Debugging & Optimization</li>
+                        </ul>
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="services-col">
+                        <h3>Content</h3>
+                        <ul class="service-list">
+                            <li>Technical Writing & Documentation</li>
+                            <li>Website Copy & Landing Pages</li>
+                            <li>Product Descriptions (E-commerce)</li>
+                            <li>Social Media Content</li>
+                            <li>Blog Posts & Articles</li>
+                            <li>Resume & Cover Letter Writing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="section-padding">
+            <div class="container">
+                <h2>Pricing</h2>
+                <div class="pricing-grid">
+                    <div class="price-card">
+                        <h3>Starter</h3>
+                        <div class="price">$10</div>
+                        <p>Perfect for quick tasks</p>
+                        <ul class="price-features">
+                            <li>Up to 500 words of content</li>
+                            <li>Basic Python script</li>
+                            <li>Product descriptions (5-10 items)</li>
+                            <li>24-hour delivery</li>
+                            <li>1 revision included</li>
+                        </ul>
+                    </div>
+                    <div class="price-card featured">
+                        <span class="badge">MOST POPULAR</span>
+                        <h3>Standard</h3>
+                        <div class="price">$50</div>
+                        <p>For most projects</p>
+                        <ul class="price-features">
+                            <li>Up to 2000 words / medium complexity</li>
+                            <li>AI integration consulting</li>
+                            <li>Custom automation scripts</li>
+                            <li>48-hour delivery</li>
+                            <li>3 revisions included</li>
+                        </ul>
+                    </div>
+                    <div class="price-card">
+                        <h3>Premium</h3>
+                        <div class="price">$150+</div>
+                        <p>Complex technical work</p>
+                        <ul class="price-features">
+                            <li>Custom ML implementation</li>
+                            <li>Full automation systems</li>
+                            <li>Multi-feature applications</li>
+                            <li>Flexible timeline</li>
+                            <li>Unlimited revisions</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="pricing-note">All prices are negotiable based on project scope. Contact me for a custom quote.</p>
+            </div>
+        </section>
+
+        <section class="section-padding" style="background-color: var(--card-bg);">
+            <div class="container">
+                <h2>How It Works</h2>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <span class="step-number">01</span>
+                        <h3>Tell me what you need</h3>
+                        <p>Send requirements via Fiverr. The more specific, the better.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-number">02</span>
+                        <h3>I build it</h3>
+                        <p>Fast turnaround with updates along the way.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-number">03</span>
+                        <h3>Revisions if needed</h3>
+                        <p>We refine until it's exactly what you wanted.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-number">04</span>
+                        <h3>Deliver & done</h3>
+                        <p>Clean files, documentation, ready to use.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <h2>Recent Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card">
+                        <div class="project-type">Automation</div>
+                        <h3>E-commerce Inventory Bot</h3>
+                        <p>Automated product tracking and price monitoring system. Saved client 15+ hours per week on manual data entry.</p>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-type">Content</div>
+                        <h3>SaaS Landing Page Copy</h3>
+                        <p>Complete website copy for tech startup. Clear, conversion-focused messaging across 8 pages.</p>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-type">AI Integration</div>
+                        <h3>Custom Support Chatbot</h3>
+                        <p>AI-powered customer service bot with GPT integration. Handles 80% of common inquiries automatically.</p>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-type">Technical Writing</div>
+                        <h3>API Documentation</h3>
+                        <p>Complete technical documentation for RESTful API. Clear examples, authentication guides, and error handling.</p>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-type">Data Processing</div>
+                        <h3>Web Scraping Tool</h3>
+                        <p>Custom Python scraper for market research. Automated data collection from 50+ sources daily.</p>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-type">Content</div>
+                        <h3>Product Description Suite</h3>
+                        <p>200+ SEO-optimized product descriptions for Shopify store. Consistent tone, compelling copy.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding" style="background-color: var(--card-bg);">
+            <div class="container">
+                <div class="cards-grid">
+                    <div class="card">
+                        <span class="card-icon">⚡</span>
+                        <h3>Fast Delivery</h3>
+                        <p>Quick turnaround without compromising quality. I respect your time and deadlines.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">💬</span>
+                        <h3>Clear Communication</h3>
+                        <p>No confusion, no endless revisions. I get it right the first time.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">🧠</span>
+                        <h3>Real Expertise</h3>
+                        <p>Technical skills backed by actual understanding. I don't just copy-paste solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <h2>Common Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>What's your turnaround time?</h3>
+                        <p>Most projects: 24-48 hours. Complex technical work may take longer - I'll give you an exact timeline upfront.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Do you offer revisions?</h3>
+                        <p>Yes. All packages include revisions to ensure you're completely satisfied with the final deliverable.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Can you handle rush orders?</h3>
+                        <p>Usually yes. Message me first to confirm availability and we can discuss expedited delivery options.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>What if I'm not sure what I need?</h3>
+                        <p>No problem. Send me your goal and I'll recommend the best approach and package for your specific situation.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h3>Are your prices negotiable?</h3>
+                        <p>Absolutely. The listed prices are starting points. Contact me with your project details for a custom quote tailored to your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <div class="container">
+                <h1>Let's Work Together</h1>
+                <p style="margin: 1.5rem auto;">Ready to start your project? Hire me on Fiverr for fast, professional service.</p>
+                <a href="https://www.fiverr.com/studio_kara/" class="btn">Hire Me on Fiverr</a>
+                
+                <div class="contact-links">
+                    <a href="mailto:kara.dev@icloud.com">kara.dev@icloud.com</a>
+                    <span>|</span>
+                    <a href="https://github.com/Kara-Develops" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Kara. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Logic
+        const toggleBtn = document.getElementById('theme-toggle');
+        const body = document.body;
+        const moonIcon = document.getElementById('moon-icon');
+        const sunIcon = document.getElementById('sun-icon');
+
+        // Check local storage
+        if (localStorage.getItem('theme') === 'light') {
+            body.classList.add('light-mode');
+            moonIcon.style.display = 'none';
+            sunIcon.style.display = 'block';
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+                moonIcon.style.display = 'none';
+                sunIcon.style.display = 'block';
+            } else {
+                localStorage.setItem('theme', 'dark');
+                moonIcon.style.display = 'block';
+                sunIcon.style.display = 'none';
+            }
+        });
+
+        // Simple Fade in on scroll logic
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Apply to sections
+        document.querySelectorAll('section').forEach((section) => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
